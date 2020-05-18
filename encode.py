@@ -13,7 +13,7 @@ import logging
 import Colorer
 import os
 import sys
-from sets import Set
+#from sets import Set
 from lfsr import lfsr
 import json
 from tqdm import tqdm
@@ -82,10 +82,12 @@ def main():
 
     
     while f.good < f.final:
+        print('f.good',f.good,'f.final',f.final)
         d = f.droplet()
-
-
+        #print('droplet is',d)
+        print('f.screen(d) is', f.screen(d))
         if f.screen(d):
+            print('in f.screen, d is',d)
             if not args.no_fasta:
                 out.write(">packet {}_{}\n".format(f.good, d.degree))
             out.write("{}\n".format(d.to_human_readable_DNA()))

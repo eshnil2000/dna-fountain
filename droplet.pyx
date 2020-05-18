@@ -6,7 +6,7 @@ from utils import int_to_four, four_to_dna
 import random
 import struct
 import numpy as np
-from sets import Set
+#from sets import Set
 
 class Droplet:
     def __init__(self, data, seed, num_chunks = None, rs = 0, rs_obj = None, degree = None):
@@ -15,7 +15,7 @@ class Droplet:
 
         self.data = data
         self.seed = seed
-        self.num_chunks = Set(num_chunks)
+        self.num_chunks = set(num_chunks)
         self.rs = rs
         self.rs_obj = rs_obj
         self.degree = degree
@@ -32,6 +32,7 @@ class Droplet:
             return self.DNA
         
         self.DNA = int_to_four(self._package())
+        print('returning self.DNA',self.DNA)
         return self.DNA
 
 
@@ -44,11 +45,14 @@ class Droplet:
         #adds the seed to the data (list of integers)
         #computes a reed solomon on the seed+data.
         #returns everything.
-
-        seed_ord =  [ ord(c) for c in struct.pack("!I", self.seed) ]
+        #print('seed is', self.seed)
+        seed_ord =  [ c for c in struct.pack("!I", self.seed) ]
+        #print('seed_ord', seed_ord)
+        #print("seed_ord",seed_ord, type(seed_ord))
+        #print("data", self.data,type(self.data))
             #converting the seed into exectly four bytes.
-        message = seed_ord + self.data
-        
+        message = seed_ord + list(self.data)
+        #message = self.data
         if self.rs > 0:
             message = self.rs_obj.encode(message) #adding RS symbols to the message
 

@@ -1,0 +1,9 @@
+numpy
+cython
+reedsolo
+tqdm
+logging
+scipy
+sets
+md5
+hashlib

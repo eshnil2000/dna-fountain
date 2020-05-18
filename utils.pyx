@@ -2,7 +2,7 @@
 Copyright (C) 2016 Yaniv Erlich
 License: GPLv3-or-later. See COPYING file for details.
 """
-from string import maketrans   # Required to call maketrans function.
+#from string import str   # Required to call maketrans function.
 import struct
 import random
 import os
@@ -12,8 +12,8 @@ import argparse
 intab = "0123"
 outtab = "ACGT"
 
-trantab = maketrans(intab, outtab)
-revtab = maketrans(outtab, intab)
+trantab = str.maketrans(intab, outtab)
+revtab = str.maketrans(outtab, intab)
 
 
 def charN(str, N):
@@ -128,19 +128,22 @@ def prepare(max_repeat):
     Ts = '3' * (max_repeat+1)
 
 def screen_repeat(drop, max_repeat, gc_dev):
-
+    
     dna = drop.toDNA()
+    print('screen_repeat', dna)
+    print('screen_repeat_dna',screen_repeat_dna(dna, max_repeat, gc_dev))
     return screen_repeat_dna(dna, max_repeat, gc_dev)
     
 
 def screen_repeat_dna(dna, max_repeat, gc_dev):
-    
+    print(dna,'As is',As, 'Cs is',Cs)
     if As in dna or Cs in dna or Gs in dna or Ts in dna: 
+        print('return from screen_repeat_dna with 0')
         return 0
 
     gc = dna.count("1") + dna.count("2")  
     gc = gc/(len(dna)+0.0)
-
+    print('value of gc',gc)
     if (gc < 0.5 - gc_dev) or (gc > 0.5 + gc_dev):
         return 0
     return 1
